@@ -30,7 +30,7 @@ async function run() {
 run().catch(console.log);
 
 app.get("/", async (req, res) => {
-  res.send("used products resail server is running");
+  res.send("Used products resail server is running");
 });
 
 app.listen(port, () => {
