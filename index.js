@@ -22,6 +22,7 @@ async function run() {
     const productsCollection = client.db("laptopResailMarket").collection("productsCollection");
 
     const bookingCollection = client.db("laptopResailMarket").collection("bookings");
+    const usersCollection = client.db("laptopResailMarket").collection("users");
     // app.get("/categories", async (req, res) => {
     //   const query = {};
     //   const options = await categoriesOptionCollection.find(query).toArray();
@@ -38,8 +39,14 @@ async function run() {
 
     app.post("/bookings", async (req, res) => {
       const booking = req.body;
-      console.log(booking);
       const result = await bookingCollection.insertOne(booking);
+      res.send(result);
+    });
+
+    //Users api
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      const result = await usersCollection.insertOne(user);
       res.send(result);
     });
 
