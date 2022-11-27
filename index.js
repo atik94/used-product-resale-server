@@ -20,19 +20,23 @@ async function run() {
   try {
     // const categoriesOptionCollection = client.db("laptopResailMarket").collection("categoriesOption");
     const productsCollection = client.db("laptopResailMarket").collection("productsCollection");
+
+    const bookingCollection = client.db("laptopResailMarket").collection("bookings");
     // app.get("/categories", async (req, res) => {
     //   const query = {};
     //   const options = await categoriesOptionCollection.find(query).toArray();
     //   res.send(options);
     // });
 
-    // app.get("/categories/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const query = { id: parseInt(id) };
-    //   const cursor = await productsCollection.find(query).toArray();
-    //   res.send(cursor);
-    // });
+    // Booking api
+    app.post("/bookings", async (req, res) => {
+      const booking = req.body;
+      console.log(booking);
+      const result = await bookingCollection.insertOne(booking);
+      res.send(result);
+    });
 
+    //products api
     app.get("/products", async (req, res) => {
       console.log(req.query);
       let query = {};
@@ -41,12 +45,6 @@ async function run() {
           category_name: req.query.category_name,
         };
       }
-
-      // if (req.query._id) {
-      //   query = {
-      //     id: req.query._id,
-      //   };
-      // }
 
       const options = await productsCollection.find(query).toArray();
       res.send(options);
