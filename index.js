@@ -46,12 +46,12 @@ async function run() {
     // });
 
     // Booking api
-    app.get("/bookings", verifyJWT, async (req, res) => {
+    app.get("/bookings", async (req, res) => {
       const email = req.query.email;
-      const decodedEmail = req.decoded.email;
-      if (email !== decodedEmail) {
-        return res.status(403).send({ message: "forbidden access" });
-      }
+      // const decodedEmail = req.decoded.email;
+      // if (email !== decodedEmail) {
+      //   return res.status(403).send({ message: "forbidden access" });
+      // }
 
       const query = { email: email };
       const bookings = await bookingCollection.find(query).toArray();
@@ -134,6 +134,12 @@ async function run() {
     });
 
     //products api
+    app.post("/products", async (req, res) => {
+      const query = req.body;
+      const options = await productsCollection.insertOne(query);
+      res.send(options);
+    });
+
     app.get("/products", async (req, res) => {
       console.log(req.query);
       let query = {};
