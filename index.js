@@ -70,13 +70,34 @@ async function run() {
       const query = { email: email };
       const user = await usersCollection.findOne(query);
       if (user) {
-        const token = jwt.sign({ email }, process.env.ACCESS_TOKEN, { expiresIn: "1h" });
+        const token = jwt.sign({ email }, process.env.ACCESS_TOKEN, { expiresIn: "30d" });
         return res.send({ accessToken: token });
       }
       res.status(403).send({ accessToken: "" });
     });
 
-    //Users api
+    //All Users api
+    app.get("/users", async (req, res) => {
+      const query = {};
+      const users = await usersCollection.find(query).toArray();
+      res.send(users);
+    });
+    // All Buyers api
+    app.get("/buyers", async (req, res) => {
+      const query = { category: "buyers" };
+      const buyers = await usersCollection.find(query).toArray();
+      console.log(buyers);
+      res.send(buyers);
+    });
+
+    // All Buyers api
+    app.get("/sellers", async (req, res) => {
+      const query = { category: "sellers" };
+      const sellers = await usersCollection.find(query).toArray();
+      console.log(sellers);
+      res.send(sellers);
+    });
+
     app.post("/users", async (req, res) => {
       const user = req.body;
       const result = await usersCollection.insertOne(user);
