@@ -34,25 +34,14 @@ function verifyJWT(req, res, next) {
 
 async function run() {
   try {
-    // const categoriesOptionCollection = client.db("laptopResailMarket").collection("categoriesOption");
     const productsCollection = client.db("laptopResailMarket").collection("productsCollection");
 
     const bookingCollection = client.db("laptopResailMarket").collection("bookings");
     const usersCollection = client.db("laptopResailMarket").collection("users");
-    // app.get("/categories", async (req, res) => {
-    //   const query = {};
-    //   const options = await categoriesOptionCollection.find(query).toArray();
-    //   res.send(options);
-    // });
 
     // Booking api
     app.get("/bookings", async (req, res) => {
       const email = req.query.email;
-      // const decodedEmail = req.decoded.email;
-      // if (email !== decodedEmail) {
-      //   return res.status(403).send({ message: "forbidden access" });
-      // }
-
       const query = { email: email };
       const bookings = await bookingCollection.find(query).toArray();
       res.send(bookings);
